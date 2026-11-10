@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Expose the operator tokens to Tailwind as colours: bg-op-surface, text-op-muted, … */
+@theme inline {
+  --color-op-bg: var(--op-bg);
+  --color-op-surface: var(--op-surface);
+  --color-op-border: var(--op-border);
+  --color-op-text: var(--op-text);
+  --color-op-muted: var(--op-muted);
+  --color-op-accent: var(--op-accent);
+  --color-op-accent-text: var(--op-accent-text);
+  --color-op-live: var(--op-live);
+  --color-op-warn: var(--op-warn);
+  --color-op-danger: var(--op-danger);
+  --font-op: var(--op-font);
+  --font-out: var(--out-font);
+  --radius-op: var(--op-radius);
+}
+
+body {
+  background: var(--op-bg);
+  color: var(--op-text);
+  font-family: var(--op-font);
+}

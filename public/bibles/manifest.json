@@ -1,0 +1,44 @@
+[
+  {
+    "id": "KJV",
+    "label": "KJV",
+    "name": "King James Version",
+    "year": 1769,
+    "license": "Public Domain"
+  },
+  {
+    "id": "WEB",
+    "label": "WEB",
+    "name": "World English Bible",
+    "year": 2000,
+    "license": "Public Domain"
+  },
+  {
+    "id": "ASV",
+    "label": "ASV",
+    "name": "American Standard Version",
+    "year": 1901,
+    "license": "Public Domain"
+  },
+  {
+    "id": "YLT",
+    "label": "YLT",
+    "name": "Young's Literal Translation",
+    "year": 1898,
+    "license": "Public Domain"
+  },
+  {
+    "id": "DARBY",
+    "label": "Darby",
+    "name": "Darby Translation",
+    "year": 1890,
+    "license": "Public Domain"
+  },
+  {
+    "id": "BBE",
+    "label": "BBE",
+    "name": "Bible in Basic English",
+    "year": 1965,
+    "license": "Public Domain"
+  }
+]
