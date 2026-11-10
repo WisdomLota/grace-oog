@@ -9,7 +9,9 @@ import { queuePosition } from "@/lib/operator/state";
 import type { DisplayState } from "@/lib/sync/channel";
 import { HistoryList } from "./HistoryList";
 import { useChapter, useOperatorState, useOutputSync, useVersions } from "./hooks";
-import { ListeningPanel } from "./ListeningPanel";
+import { useState } from "react";
+import { detectReferences } from "@/lib/speech/detect";
+import { ListeningPanel, type DetectedItem } from "./ListeningPanel";
 import { ManualSearch } from "./ManualSearch";
 import { NowShowing } from "./NowShowing";
 import { Button, StatusPill } from "./ui";
@@ -18,6 +20,7 @@ import { VersionSwitcher } from "./VersionSwitcher";
 export function OperatorPanel() {
   const [state, dispatch] = useOperatorState();
   const { versions, error: versionsError } = useVersions();
+  const [detected, setDetected] = useState<DetectedItem[]>([]);
   const { passage, current, live, version } = state;
 
   const versionInfo = versions.find((v) => v.id === version);
@@ -82,7 +85,23 @@ export function OperatorPanel() {
         </div>
 
         <aside className="flex min-w-0 flex-col gap-4">
-          <ListeningPanel mode="off" />
+          <ListeningPanel
+            mode="off"
+            detected={detected}
+            onTry={(sentence) => {
+              const found = detectReferences(sentence);
+              const now = Date.now();
+              const items = found.map((detection, k) => ({ id: `${now}-${k}`, at: now, detection }));
+              setDetected((prev) => [...items.reverse(), ...prev].slice(0, 30));
+              return found.length;
+            }}
+            onShow={(item, ref) => {
+              dispatch({ type: "show", ref });
+              setDetected((prev) => prev.filter((d) => d.id !== item.id));
+            }}
+            onDismiss={(id) => setDetected((prev) => prev.filter((d) => d.id !== id))}
+            onClearDetected={() => setDetected([])}
+          />
           <HistoryList history={state.history} onShow={(ref) => dispatch({ type: "show", ref })} onClear={() => dispatch({ type: "clearHistory" })} />
         </aside>
       </main>
